@@ -51,8 +51,8 @@ from src import debug as dbg
 from datetime import datetime
 warnings.filterwarnings('ignore')
 
-version = '1.5.1'
-date = '2025-08-05'
+version = '1.5.3'
+date = '2025-08-07'
 current_cfg = ''
 
 plant_param_dir = ''

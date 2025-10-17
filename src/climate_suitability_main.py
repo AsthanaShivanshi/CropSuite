@@ -638,9 +638,12 @@ def climsuit_new(climate_config, extent, temperature, precipitation, land_sea_ma
         dursowing, sowingtemp = 7, 5
 
     additional_conditions = [cond for i in range(100) if (cond := plant_params[plant].get(f'AddCon:{i}')) is not None]
-    for adcon in additional_conditions:
-        if int(adcon[5]) == 0:
-            additional_conditions.remove(adcon)
+    try:
+        for adcon in additional_conditions:
+            if int(adcon[5]) == 0:
+                additional_conditions.remove(adcon)
+    except:
+        additional_conditions = []
 
     no_threads, av_ram = dt.get_cpu_ram()
     pixeltoprocess = temperature.shape[0] * temperature.shape[1]
