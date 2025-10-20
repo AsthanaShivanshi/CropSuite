@@ -325,8 +325,8 @@ def startup():
         |                                                     |    
         |                      CropSuite                      |
         |                                                     |
-        |                    Version 1.0.1                    |
-        |                      2025-02-07                     |
+        |                    Version 1.5.4                    |
+        |                      2025-10-17                     |
         |                                                     |
         |     - Create Files for Climate and Variability -    |
         |                                                     |
@@ -334,9 +334,6 @@ def startup():
         |                     Florian Zabel                   |
         |                   Matthias Knüttel                  |
         |                         2025                        |
-        |                                                     |  
-        |                  University of Basel                |
-        |                                                     |
         |                                                     |
         |                © All rights reserved                |
         |                                                     |
@@ -365,7 +362,6 @@ if __name__ == '__main__':
             except:
                 command = ['python3', 'CropSuite.py', '-silent', '-config', f'{config_file}']
                 subprocess.run(command)
-
     else:
         if os.path.exists('config.ini'):
             config_ini_path = 'config.ini'

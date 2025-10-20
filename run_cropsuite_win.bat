@@ -72,8 +72,10 @@ python -m pip install numpy==1.26.4 ^
                             psutil==7.0.0 ^
                             pyproj==3.7.1 ^
                             scikit-image==0.25.2 ^
+                            zarr==3.0.6 ^
+                            pyzipper ^
                             tk
-			    pyzipper
+
 )
 call "%VENV_DIR%\Scripts\activate.bat"
 

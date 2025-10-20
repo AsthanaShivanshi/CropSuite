@@ -101,6 +101,7 @@ if [ "$ONLINE" = true ]; then
         pyproj==3.7.1 \
         scikit-image==0.25.2 \
 		pyzipper \
+		zarr==3.0.6 \
         tk
 
     echo

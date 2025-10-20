@@ -109,10 +109,6 @@ def run(silent_mode=False, config_file=None, gui = None, no_version_check = Fals
         |                         {datetime.now().year}                        |
         |                                                     |
         |                                                     |
-        |          Department of Environmental Sciences       |      
-        |                 University of Basel                 |
-        |                                                     |
-        |                                                     |
         |           © 2023-{datetime.now().year} All rights reserved           |
         |                                                     |
         =======================================================

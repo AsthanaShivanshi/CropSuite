@@ -96,6 +96,8 @@ def worldclim_downscaling_temp(extent, config_file, output_dir):
     if not all(os.path.exists(os.path.join(world_clim_data_dir, f'factors_month_{band_index}.nc')) for band_index in range(1, 13)):
         world_clim_data_dir = ti.calculate_temp_factors(fine_resolution, coarse_resolution, world_clim_data_dir, extent)
     temp_data, _ = dt.load_specified_lines(temp_file, extent=extent)
+    if np.nanmin(temp_data > 50):
+        temp_data = temp_data - 273.15
     parallel_processing(temp_data, extent, fine_resolution, output_dir, 'temp', np.isnan(land_sea_mask), world_clim_data_dir)
     return [os.path.join(output_dir, f'ds_temp_{day}.nc') for day in range(0, 365)]
 

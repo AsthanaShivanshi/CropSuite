@@ -236,7 +236,6 @@ def process_day_climsuit_memopt(args):
         # Extract temperature and precipitation data with modular arithmetic, avoiding array doubling
         start_indices_full = (start_indices + range_indices) % 365  # Wrap indices in range [0, 365)
 
-        # Use advanced indexing to extract data
         temp_to_vern = temperature[rows, cols, start_indices_full]  # Extract temperature
         prec_to_vern = precipitation[rows, cols, start_indices_full]  # Extract precipitation
 
@@ -244,8 +243,8 @@ def process_day_climsuit_memopt(args):
         vern_temp = np.nan_to_num(vern_temp, nan=-32767).astype(np.int16)
         vern_temp[np.nanmean(temp_to_vern[..., :dursowing], axis=2) <= (sowingtemp * 10)] = -32767
 
-        vern_prec = np.sum(prec_to_vern, axis=2, dtype=np.int16) / (days_to_vern / growing_cycle)
-        vern_prec[np.sum(prec_to_vern[..., :sowprec_params[0]], axis=2, dtype=np.int16) <= sowprec_params[1] * 10] = 0
+        vern_prec = np.sum(prec_to_vern, axis=2, dtype=np.int16) # / (days_to_vern / growing_cycle)
+        vern_prec[np.sum(prec_to_vern[..., :sowprec_params[1]], axis=2, dtype=np.int16) < sowprec_params[0] * 10] = -1
         del temp_to_vern, prec_to_vern
 
         opt_start_date[(vern_temp <= 0) | (vern_prec <= 0)] = -1
@@ -286,7 +285,7 @@ def process_day_climsuit_memopt(args):
     if irrigation == 0:
         prec = np.where(water_mask == 1, np.sum(precipitation, axis=2).astype(np.int32), 0)
         if wintercrop:
-            prec = ((prec * growing_cycle) + (vern_prec * vernalization_params[5])) / (growing_cycle + vernalization_params[5])
+            prec = prec + vern_prec
         if len(phenology_params) > 0 and not wintercrop and growing_cycle < 365:
             prec = []
             for entry in [entry for entry in phenology_params if entry[0] == 'prec']:
@@ -301,7 +300,7 @@ def process_day_climsuit_memopt(args):
                 prec.append(curr_prec)
             prec = np.min(np.asarray(prec, dtype=np.int8), axis=0)
         else:
-            prec[water_mask == 1] = (get_suitability_val_dict(plant_params_forumlas, plant, 'prec', prec[water_mask == 1] / 10) * 100)
+            prec = (get_suitability_val_dict(plant_params_forumlas, plant, 'prec', prec / 10) * 100)
             prec = prec.astype(np.int8)
     else:
         prec = np.zeros_like(temp)
@@ -539,15 +538,6 @@ def climsuit_new(climate_config, extent, temperature, precipitation, land_sea_ma
                           os.listdir(os.path.join(climate_config['files']['output_dir'] + '_downscaled', area_name)) if\
                             f.startswith(f'ds_{crop_failure_code}_{plant.lower()}_{"ir" if irrigation else "rf"}_')],\
                                 key=lambda f: int(re.search(r'_(\d+)\.nc$', f).group(1))) #type:ignore
-    """
-    if len(rrpcf_files) and climate_config['climatevariability'].get('consider_variability', False):
-        if os.path.exists(os.path.join(os.path.split(results_path)[0]+'_var', os.path.split(results_path)[1], plant, 'climate_suitability.tif'))\
-            and os.path.exists(os.path.join(os.path.split(results_path)[0]+'_novar', os.path.split(results_path)[1], plant,'climate_suitability.tif')):
-            return [os.path.join(os.path.split(results_path)[0]+'_var', os.path.split(results_path)[1]),\
-                    os.path.join(os.path.split(results_path)[0]+'_novar', os.path.split(results_path)[1])]
-    elif os.path.exists(os.path.join(os.path.split(results_path)[0]+'_novar', plant, 'climate_suitability.tif')):
-        return [os.path.join(os.path.split(results_path)[0]+'_novar', os.path.split(results_path)[1])]
-    """
 
     base, sub = os.path.split(results_path)
     val = int(climate_config['climatevariability'].get('consider_variability', 0))
@@ -726,6 +716,7 @@ def climsuit_new(climate_config, extent, temperature, precipitation, land_sea_ma
             while True:
                 if len(os.listdir(tmp)) >= 365:
                     break
+                #max_proc = 1
                 if max_proc == 1:
                     for day in range(365):
                         process_day_concfut(day) 

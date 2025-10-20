@@ -51,8 +51,8 @@ from src import debug as dbg
 from datetime import datetime
 warnings.filterwarnings('ignore')
 
-version = '1.5.3'
-date = '2025-08-07'
+version = '1.5.5'
+date = '2025-10-18'
 current_cfg = ''
 
 plant_param_dir = ''
@@ -104,7 +104,7 @@ class CropSuiteGui:
         self.font18 = f'Helvetica 18'
         self.font20 = f'Helvetica 20'
 
-        self.image_unibas = PhotoImage(file=os.path.abspath(os.path.join(os.path.dirname(__file__), 'src', 'unibas.png')), master=self.window)
+        #self.image_unibas = PhotoImage(file=os.path.abspath(os.path.join(os.path.dirname(__file__), 'src', 'unibas.png')), master=self.window)
         self.setup_ui(config_ini)
 
     def setup_ui(self, config_path):
@@ -113,7 +113,7 @@ class CropSuiteGui:
         Label(self.window, text=f'Version {version}').pack()
         Label(self.window, text=date+'\n').pack()
         Label(self.window, text='Matthias Knüttel & Florian Zabel\n').pack()
-        Label(self.window, image=self.image_unibas).pack()
+        #Label(self.window, image=self.image_unibas).pack()
         Label(self.window, text='\n© 2023-2025 All rights reserved\n').pack()
 
         frame = Frame(self.window)
@@ -1629,10 +1629,10 @@ def main_gui():
     canvas = Canvas(main_window, width=600, height=218, highlightthickness=0)
     canvas.pack()
     canvas.create_image(0, 0, anchor='nw', image=header_image_tk)
-    canvas.create_text(80, 105, text=f"Version {version}", font=("Helvtica", 16, "bold"), fill="#181818")
-    canvas.create_text(79, 130, text=datetime.strptime(date, '%Y-%m-%d').strftime('%B %d, %Y'), font=("Helvtica", 16), fill="#181818")
-    canvas.create_text(139, 180, text=f'© 2023-{datetime.strptime(date, "%Y-%m-%d").strftime("%Y")} Matthias Knüttel & Florian Zabel',
-                       font=("Helvtica", 9, "bold"), fill="#181818")
+    canvas.create_text(10, 105, text=f"Version {version}", font=("Helvtica", 16, "bold"), fill="#181818", anchor='w')
+    canvas.create_text(10, 130, text=datetime.strptime(date, '%Y-%m-%d').strftime('%B %d, %Y'), font=("Helvtica", 16), fill="#181818", anchor='w')
+    canvas.create_text(10, 180, text=f'© 2023-{datetime.strptime(date, "%Y-%m-%d").strftime("%Y")} Matthias Knüttel & Florian Zabel',
+                       font=("Helvtica", 9, "bold"), fill="#181818", anchor='w')
     canvas.image = header_image_tk #type:ignore
     
     def open_viewer(config):
