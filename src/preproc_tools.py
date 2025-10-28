@@ -92,8 +92,15 @@ def calculate_daily_temp_mean(temp_files, out_file, start_year, end_year, extent
     ds = new_ds[0] if len(new_ds) == 1 else xr.concat(new_ds, dim='time')
     varname = list(ds.data_vars)[0]
     print('    -> Calculating daily average temperature')
+    #ds = ds.groupby('time.dayofyear').mean('time')
+    #ds = ds.sel(dayofyear=slice(1, 365))
+    
+    unique_days = np.unique(ds['time.dayofyear'])
     ds = ds.groupby('time.dayofyear').mean('time')
-    ds = ds.sel(dayofyear=slice(1, 365))
+    ds = ds.sel(dayofyear=unique_days)
+    if ds.dims['dayofyear'] > 365:
+        ds = ds.isel(dayofyear=slice(0, 365))
+    
     if ds[varname].mean() > 100:
         ds[varname] -= 273.15
     encoding = {varname: {'zlib': True, 'complevel': 9, 'shuffle': True}}
@@ -132,29 +139,19 @@ def calculate_daily_prec_sum(prec_files, out_file, start_year, end_year, extent 
             leap_idx.append(idx)
     ds = ds.isel(time=~np.isin(np.arange(ds.sizes['time']), np.asarray(leap_idx)))
     print('    -> Calculating daily average precipitation (optimized)')
-    ds = ds.groupby('time.dayofyear').mean(dim='time', skipna=True)
-    ds = ds.sel(dayofyear=slice(1, 365))
+    
+    #ds = ds.groupby('time.dayofyear').mean(dim='time', skipna=True)
+    #ds = ds.sel(dayofyear=slice(1, 365))
+    unique_days = np.unique(ds['time.dayofyear'])
+    ds = ds.groupby('time.dayofyear').mean('time')
+    ds = ds.sel(dayofyear=unique_days)
+    if ds.dims['dayofyear'] > 365:
+        ds = ds.isel(dayofyear=slice(0, 365))    
+   
     if ds[varname].attrs.get('units', 'Units not found') != 'mm':
         print('    -> Converting units from non-mm to mm')
         ds[varname] = ds[varname] * 3600 * 24
 
-    """
-    leap_idx = []
-    for idx, tv in enumerate(list(ds['time'].values)):
-        dt = tv.astype('M8[D]').astype(object)
-        if dt.month == 2 and dt.day == 29:
-            leap_idx.append(idx)
-    #ds = ds[varname].isel(time=[i for i in range(ds[varname].shape[0]) if i not in leap_idx])
-    ds = ds.isel(time=[i for i in range(ds[varname].shape[0]) if i not in leap_idx])
-    
-    print('    -> Calculating daily average precipitation')
-    #ds = ds.groupby('time.dayofyear').mean('time')
-    #ds = ds.sel(dayofyear=slice(1, 365))
-    ds = ds.chunk({'time': 183})
-    ds = ds.resample(time='D').mean() 
-    if ds[varname].attrs.get('units', 'Units not found') != 'mm':
-        ds[varname] = ds[varname] * 3600 * 24
-    """
     encoding = {varname: {'zlib': True, 'complevel': 9, 'shuffle': True}}
 
     print('    -> Writing new NetCDF file')
@@ -662,6 +659,7 @@ def parse_value(value):
         return float(value) if "." in value else int(value)
     return value.strip(" '\"")
 
+"""
 def read_pp_file(pp_file):
     variables = {}
     with open(pp_file, 'r') as rf:
@@ -669,6 +667,20 @@ def read_pp_file(pp_file):
             key, value = line.strip().split(" = ", 1)
             variables[key] = parse_value(value)
     return variables
+"""
+
+
+def read_pp_file(pp_file):
+    variables = {}
+    with open(pp_file, 'r') as rf:
+        for line in rf:
+            line = line.strip()
+            if not line or line.startswith(";") or " = " not in line:
+                continue
+            key, value = line.strip().split(" = ", 1)
+            variables[key] = parse_value(value)
+    return variables
+
 
 def parse_inf_file(config_file):
     params = read_pp_file(config_file)

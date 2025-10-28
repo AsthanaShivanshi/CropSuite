@@ -67,6 +67,7 @@ def run(silent_mode=False, config_file=None, gui = None, no_version_check = Fals
         from src import preproc_tools as pti
         from src import crop_rotation as cro
         from src import output_rrpcf as orp
+        from src import debug as dbg
     except:
         import climate_suitability_main as csm
         import read_climate_ini as rci
@@ -80,6 +81,7 @@ def run(silent_mode=False, config_file=None, gui = None, no_version_check = Fals
         import preproc_tools as pti   
         import crop_rotation as cro  
         import output_rrpcf as orp
+        import debug as dbg
     import numpy as np
     import math
     import shutil
@@ -150,6 +152,11 @@ def run(silent_mode=False, config_file=None, gui = None, no_version_check = Fals
     if not silent_mode:
         input('\n\nPress Enter to Start\n\n')
 
+    try:
+        dbg.write_debug_package(config_file)
+    except:
+        print('Warning: DumpFile.dmp could not be written.')
+
     pret_file = os.path.join(os.path.dirname(config_file), 'preproc.ini')
     if os.path.exists(pret_file):
         config_ini, temp_files, temp_varname, prec_files, prec_varname, time_range, pret_extent, proc_varfiles, downscaling, autostart = pti.parse_inf_file(pret_file)
@@ -173,6 +180,9 @@ def run(silent_mode=False, config_file=None, gui = None, no_version_check = Fals
     ##### DOWNSCALING #####
 
     print('\nDownscaling the climate data\n')
+
+    #csr.check_climate_data(climate_config, silent=silent_mode, mode='temp')
+    #csr.check_climate_data(climate_config, silent=silent_mode, mode='prec')
     prec_files, prec_dailyfiles = ds.interpolate_precipitation(climate_config, extent, area_name)
     temp_files, temp_dailyfiles = ds.interpolate_temperature(climate_config, extent, area_name)
     if int(climate_config['climatevariability'].get('consider_variability', True)) > 0:

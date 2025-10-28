@@ -1,4 +1,7 @@
 #! usr/bin/env python
+version = '1.5.6'
+date = '2025-10-28'
+
 import sys
 import os
 
@@ -11,10 +14,35 @@ except Exception as e:
     print(f"Failed to modify system path: {e}")
 
 from tkinter import * #type:ignore
-from tkinter import filedialog
-from tkinter import ttk
 from tkinter import Canvas
 from tkinter import Tk
+from PIL import Image, ImageTk
+
+def loading_gui(version_number):
+    loading_window = Tk()
+    loading_window.focus_force()
+    loading_window.title("CropSuite")
+    loading_window.resizable(0, 0) #type:ignore
+    loading_window.overrideredirect(1) #type:ignore
+    x, y = 500, 500
+    loading_window.geometry(f'{x}x{y}+{(loading_window.winfo_screenwidth() - x) // 2}+{(loading_window.winfo_screenheight() - y) // 2}')
+    splash_image = Image.open(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src', 'splashscreen.png')))
+    splash_image = splash_image.resize((500, 500))
+    splash_image = ImageTk.PhotoImage(splash_image)
+    canvas = Canvas(loading_window, width=500, height=500, bg='#87a600', highlightthickness=0)
+    canvas.pack()
+    canvas.create_image(0, 0, image=splash_image, anchor='nw')
+    canvas.create_text(250, 320, text=f"Version {version_number}", font=("Helvetica", 12, "bold"), fill="black")
+    os.makedirs(os.path.abspath(os.path.join(os.path.dirname(__file__), 'plant_params')), exist_ok=True)
+    os.makedirs(os.path.abspath(os.path.join(os.path.dirname(__file__), 'results')), exist_ok=True)
+    os.makedirs(os.path.abspath(os.path.join(os.path.dirname(__file__), 'temp')), exist_ok=True)
+    os.makedirs(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')), exist_ok=True)
+    loading_window.after(12000, lambda: loading_window.destroy())
+    loading_window.mainloop()
+loading_gui(version_number=version)
+
+from tkinter import filedialog
+from tkinter import ttk
 import tkinter as tk
 from CropSuite import run
 import os
@@ -30,7 +58,6 @@ from src import limfact_analyzer as limfa
 from src import viewer
 from src import check_versions as cv
 import numpy as np
-from PIL import Image, ImageTk
 import subprocess
 import re
 import matplotlib.pyplot as plt
@@ -47,12 +74,10 @@ import warnings
 import xarray as xr
 from src import plant_param_gui
 from src import config_gui as cfg
-from src import debug as dbg
+#from src import debug as dbg
 from datetime import datetime
 warnings.filterwarnings('ignore')
 
-version = '1.5.5'
-date = '2025-10-18'
 current_cfg = ''
 
 plant_param_dir = ''
@@ -178,8 +203,7 @@ class CropSuiteGui:
 
     def viewer(self):
         self.window.destroy()
-        cfg = self.config_ini_val
-        viewer_gui(cfg)
+        open_viewer_beta(self.config_ini_val)
 
     def setup_buttons(self):
         self.but_frame = Frame(self.window)
@@ -338,33 +362,7 @@ class CropSuiteGui:
         self.window.update()
         return True
 
-def loading_gui(version_number):
-    loading_window = Tk()
-    loading_window.focus_force()
-    loading_window.title("CropSuite")
-    loading_window.resizable(0, 0) #type:ignore
-    loading_window.overrideredirect(1) #type:ignore
 
-    x, y = 500, 500
-    loading_window.geometry(f'{x}x{y}+{(loading_window.winfo_screenwidth() - x) // 2}+{(loading_window.winfo_screenheight() - y) // 2}')
-    splash_image = Image.open(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src', 'splashscreen.png')))
-    splash_image = splash_image.resize((500, 500))
-    splash_image = ImageTk.PhotoImage(splash_image)
-
-    canvas = Canvas(loading_window, width=500, height=500, bg='#87a600', highlightthickness=0)
-    canvas.pack()
-    canvas.create_image(0, 0, image=splash_image, anchor='nw')
-    canvas.create_text(250, 380, text=f"Version {version_number}", font=("Helvetica", 12, "bold"), fill="black")
-
-
-    os.makedirs(os.path.abspath(os.path.join(os.path.dirname(__file__), 'plant_params')), exist_ok=True)
-    os.makedirs(os.path.abspath(os.path.join(os.path.dirname(__file__), 'results')), exist_ok=True)
-    os.makedirs(os.path.abspath(os.path.join(os.path.dirname(__file__), 'temp')), exist_ok=True)
-    os.makedirs(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')), exist_ok=True)
-
-    loading_window.after(5000, lambda: loading_window.destroy())
-    loading_window.mainloop()
-    main_gui()
 
 def get_tifs(dir, compare_val):
     if compare_val == 0:
@@ -1938,7 +1936,7 @@ def main_gui():
     Label(main_window, text='').pack()
 
     def start(ini_path):
-        dbg.write_debug_package(ini_path)
+        #dbg.write_debug_package(ini_path)
         main_window.destroy()
         start_secproc(ini_path)
 
@@ -2261,4 +2259,6 @@ if __name__ == '__main__':
     print('Running CropSuite')
     print('Loading...')
     if cv.check_versions():
-        loading_gui(version_number=version)
+        main_gui()
+    
+        #loading_gui(version_number=version)

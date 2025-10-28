@@ -60,7 +60,7 @@ def write_rrpcf_day(config_dict, extent):
                             mask = data == uid
                             result[mask] = ds[list(ds.data_vars)[0]].values[mask]
                 profile.update({"dtype": result.dtype,"count": 1,"compress": "lzw", "nodata": -1})
-                with rasterio.open(os.path.join(crop_dir, out_file), "w", **profile) as dst:
+                with rasterio.open(out_file, "w", **profile) as dst:
                     dst.write(result, 1)
     
     crop_rotation_path = os.path.join(f'{config_dict["files"].get("output_dir")}_var', area_name, 'crop_rotation')
