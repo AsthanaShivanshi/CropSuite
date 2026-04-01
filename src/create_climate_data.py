@@ -4,7 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 import rasterio
 import warnings
 warnings.filterwarnings('ignore', category=RuntimeWarning) 
-import read_climate_ini as rci
+import CropSuite.src.read_climate_ini as rci
 
 
 def get_file_paths_with_string(root_path, target_string):

@@ -1,6 +1,6 @@
 from tkinter import Tk, Label, StringVar, DoubleVar, filedialog, Frame, Entry, Button, OptionMenu, ttk
 import os
-import read_climate_ini as rci
+import CropSuite.src.read_climate_ini as rci
 
 
 class ParamGUI:

@@ -2,11 +2,11 @@ import tkinter as tk
 from tkinter import ttk, filedialog
 import os
 try:
-    import read_climate_ini as rci
-    import preproc_gui as ppi
+    import CropSuite.src.read_climate_ini as rci
+    import CropSuite.src.preproc_gui as ppi
 except:
-    from src import read_climate_ini as rci
-    from src import preproc_gui as ppi
+    from CropSuite.src import read_climate_ini as rci
+    from CropSuite.src import preproc_gui as ppi
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk #type:ignore

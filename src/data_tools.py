@@ -18,9 +18,9 @@ from rio_cogeo.profiles import cog_profiles
 import scipy.ndimage
 import sys
 try:
-    import nc_tools as nc
+    import CropSuite.src.nc_tools as nc
 except:
-    from src import nc_tools as nc
+    from CropSuite.src import nc_tools as nc
 from scipy.ndimage import zoom
 from collections import namedtuple
 

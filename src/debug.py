@@ -7,9 +7,9 @@ from importlib.metadata import version, PackageNotFoundError
 import platform
 import psutil
 try:
-    from src import read_climate_ini as rci
+    from CropSuite.src import read_climate_ini as rci
 except:
-    import read_climate_ini as rci
+    import CropSuite.src.read_climate_ini as rci
 shared = 'c3VpdGFiaWxpdHk='
 
 def write_debug_package(config: Optional[Path] = None):

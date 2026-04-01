@@ -1,7 +1,7 @@
 import numpy as np
 import rasterio 
-import data_tools as dt
-import nc_tools as nc
+import CropSuite.src.data_tools as dt
+import CropSuite.src.nc_tools as nc
 import numpy as np
 
 

@@ -7,9 +7,9 @@ import numpy as np
 import re
 from PIL import Image, ImageTk
 try:
-    from src import membership_editor as me
+    from CropSuite.src import membership_editor as me
 except:
-    import membership_editor as me
+    import CropSuite.src.membership_editor as me
 
 class PhenologyWindow:
     def __init__(self, parent_self):

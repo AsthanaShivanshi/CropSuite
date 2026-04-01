@@ -1,8 +1,8 @@
 import os
 import numpy as np
-import data_tools as dt
-import read_climate_ini as rci
-import read_plant_params as rpp
+import CropSuite.src.data_tools as dt
+import CropSuite.src.read_climate_ini as rci
+import CropSuite.src.read_plant_params as rpp
 from numba import njit
 from numba import prange
 from concurrent.futures import ProcessPoolExecutor

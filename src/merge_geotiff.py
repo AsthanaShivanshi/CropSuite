@@ -6,8 +6,8 @@ import re
 import numpy as np
 import shutil
 import sys
-import data_tools as dt
-import nc_tools as nc
+import CropSuite.src.data_tools as dt
+import CropSuite.src.nc_tools as nc
 
 
 def process_geotiff(file_path):

@@ -18,13 +18,13 @@ import matplotlib.colors as clr
 from datetime import datetime
 import re
 try:
-    import limfact_analyzer as lfa
-    import data_tools as dt
-    import viewer_plot as vp
+    import CropSuite.src.limfact_analyzer as lfa
+    import CropSuite.src.data_tools as dt
+    import CropSuite.src.viewer_plot as vp
 except:
-    from src import limfact_analyzer as lfa
-    from src import data_tools as dt
-    from src import viewer_plot as vp
+    from CropSuite.src import limfact_analyzer as lfa
+    from CropSuite.src import data_tools as dt
+    from CropSuite.src import viewer_plot as vp
 
 with open('CropSuite_GUI.py', 'r', encoding='utf-8') as file:
     text = file.read()

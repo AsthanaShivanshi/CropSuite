@@ -44,19 +44,19 @@ loading_gui(version_number=version)
 from tkinter import filedialog
 from tkinter import ttk
 import tkinter as tk
-from CropSuite import run
+from CropSuite.CropSuite import run
 import os
 import platform
 import shutil
 global plant_window
-from src import check_prereqs as cp
-from src import read_climate_ini as rci
-from src import data_tools as dt
-from src import nc_tools as nc
-from src import param_gui as pargui
-from src import limfact_analyzer as limfa
-from src import viewer
-from src import check_versions as cv
+from CropSuite.src import check_prereqs as cp
+from CropSuite.src import read_climate_ini as rci
+from CropSuite.src import data_tools as dt
+from CropSuite.src import nc_tools as nc
+from CropSuite.src import param_gui as pargui
+from CropSuite.src import limfact_analyzer as limfa
+from CropSuite.src import viewer
+from CropSuite.src import check_versions as cv
 import numpy as np
 import subprocess
 import re
@@ -72,8 +72,8 @@ from matplotlib.figure import Figure
 from datetime import datetime
 import warnings
 import xarray as xr
-from src import plant_param_gui
-from src import config_gui as cfg
+from CropSuite.src import plant_param_gui
+from CropSuite.src import config_gui as cfg
 #from src import debug as dbg
 from datetime import datetime
 warnings.filterwarnings('ignore')

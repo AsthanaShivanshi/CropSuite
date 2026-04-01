@@ -10,11 +10,11 @@ import os
 import warnings
 import numpy as np
 try:
-    import preproc_tools as pret
-    import read_climate_ini as rci
+    import CropSuite.src.preproc_tools as pret
+    import CropSuite.src.read_climate_ini as rci
 except:
-    from src import preproc_tools as pret
-    from src import read_climate_ini as rci
+    from CropSuite.src import preproc_tools as pret
+    from CropSuite.src import read_climate_ini as rci
 warnings.filterwarnings('ignore')
 import shlex
 

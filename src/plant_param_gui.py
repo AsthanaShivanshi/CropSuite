@@ -5,13 +5,13 @@ import os
 import warnings
 import numpy as np
 try:
-    import read_climate_ini as rci
-    import read_plant_params as rpp
-    import config_phenology
+    import CropSuite.src.read_climate_ini as rci
+    import CropSuite.src.read_plant_params as rpp
+    import CropSuite.src.config_phenology as config_phenology
 except:
-    from src import read_climate_ini as rci
-    from src import read_plant_params as rpp
-    from src import config_phenology
+    from CropSuite.src import read_climate_ini as rci
+    from CropSuite.src import read_plant_params as rpp
+    from CropSuite.src import config_phenology
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg

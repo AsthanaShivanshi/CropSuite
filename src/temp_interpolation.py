@@ -6,11 +6,11 @@ import sys
 from scipy.stats import linregress
 from scipy.interpolate import NearestNDInterpolator
 try:
-    import data_tools as dt
-    import nc_tools as nc
+    import CropSuite.src.data_tools as dt
+    import CropSuite.src.nc_tools as nc
 except:
-    from src import data_tools as dt
-    from src import nc_tools as nc
+    from CropSuite.src import data_tools as dt
+    from CropSuite.src import nc_tools as nc
 import concurrent.futures
 import math
 import warnings

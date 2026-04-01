@@ -3,9 +3,9 @@ from rasterio.transform import from_bounds
 import os
 import numpy as np
 import rasterio
-import data_tools as dt
+import CropSuite.src.data_tools as dt
 from matplotlib import path
-import nc_tools as nc
+import CropSuite.src.nc_tools as nc
 
 
 def get_formula(x_vals, y_vals, method):

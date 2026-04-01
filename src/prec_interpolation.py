@@ -4,11 +4,11 @@ import rasterio
 import gc
 import sys
 try:
-    import data_tools as dt
-    import nc_tools as nc
+    import CropSuite.src.data_tools as dt
+    import CropSuite.src.nc_tools as nc
 except:
-    from src import data_tools as dt
-    from src import nc_tools as nc
+    from CropSuite.src import data_tools as dt
+    from CropSuite.src import nc_tools as nc
 from skimage import transform as skt
 
 def read_tif(fn):

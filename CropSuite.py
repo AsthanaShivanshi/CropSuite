@@ -8,8 +8,8 @@ try:
 except Exception as e:
     print(f"Failed to modify system path: {e}")
 try:
-    from src import check_versions as cv
-    from src import check_prereqs as cp
+    from CropSuite.src import check_versions as cv
+    from CropSuite.src import check_prereqs as cp
 except:
     import check_prereqs as cp
     import check_versions as cv
@@ -55,19 +55,19 @@ def run(silent_mode=False, config_file=None, gui = None, no_version_check = Fals
         print(f"Failed to modify system path: {e}")
     
     try:
-        from src import climate_suitability_main as csm
-        from src import read_climate_ini as rci
-        from src import read_plant_params as rpp
-        from src import crop_suitability_main as crop_suit
-        from src import check_files
-        from src import data_tools as dt
-        from src import merge_geotiff as mg
-        from src import nc_tools as nc
-        from src import downscaling as ds
-        from src import preproc_tools as pti
-        from src import crop_rotation as cro
-        from src import output_rrpcf as orp
-        from src import debug as dbg
+        from CropSuite.src import climate_suitability_main as csm
+        from CropSuite.src import read_climate_ini as rci
+        from CropSuite.src import read_plant_params as rpp
+        from CropSuite.src import crop_suitability_main as crop_suit
+        from CropSuite.src import check_files
+        from CropSuite.src import data_tools as dt
+        from CropSuite.src import merge_geotiff as mg
+        from CropSuite.src import nc_tools as nc
+        from CropSuite.src import downscaling as ds
+        from CropSuite.src import preproc_tools as pti
+        from CropSuite.src import crop_rotation as cro
+        from CropSuite.src import output_rrpcf as orp
+        from CropSuite.src import debug as dbg
     except:
         import climate_suitability_main as csm
         import read_climate_ini as rci
@@ -164,7 +164,7 @@ def run(silent_mode=False, config_file=None, gui = None, no_version_check = Fals
             pti.preprocessing_main(config_ini, temp_files, prec_files, time_range, pret_extent, proc_varfiles, temp_varname, prec_varname, downscaling=downscaling==1) #type:ignore
 
     cp.check_config_file(climate_config)
-    extent = check_files.check_all_inputs(climate_config)
+    extent = CropSuite.src.check_files.check_all_inputs(climate_config)
      
     if gui != None:
         gui.check_inpts_true()

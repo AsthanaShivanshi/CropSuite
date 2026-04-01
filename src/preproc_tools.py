@@ -9,25 +9,25 @@ except Exception as e:
 import numpy as np
 import xarray as xr
 try:
-    from src import data_tools as dt
-    from src import read_climate_ini as rci
-    from src import nc_tools as nc
-    from src import read_plant_params as rpp
-    from src import temp_interpolation as ti
-    from src import prec_interpolation as pi
-    import data_tools as dt
-    import read_climate_ini as rci
-    import nc_tools as nc
-    import read_plant_params as rpp
-    import temp_interpolation as ti
-    import prec_interpolation as pi
+    from CropSuite.src import data_tools as dt
+    from CropSuite.src import read_climate_ini as rci
+    from CropSuite.src import nc_tools as nc
+    from CropSuite.src import read_plant_params as rpp
+    from CropSuite.src import temp_interpolation as ti
+    from CropSuite.src import prec_interpolation as pi
+    import CropSuite.src.data_tools as dt
+    import CropSuite.src.read_climate_ini as rci
+    import CropSuite.src.nc_tools as nc
+    import CropSuite.src.read_plant_params as rpp
+    import CropSuite.src.temp_interpolation as ti
+    import CropSuite.src.prec_interpolation as pi
 except:
-    import data_tools as dt
-    import read_climate_ini as rci
-    import nc_tools as nc
-    import read_plant_params as rpp
-    import temp_interpolation as ti
-    import prec_interpolation as pi
+    import CropSuite.src.data_tools as dt
+    import CropSuite.src.read_climate_ini as rci
+    import CropSuite.src.nc_tools as nc
+    import CropSuite.src.read_plant_params as rpp
+    import CropSuite.src.temp_interpolation as ti
+    import CropSuite.src.prec_interpolation as pi
 from concurrent.futures import ProcessPoolExecutor
 import math
 from skimage import transform as skt

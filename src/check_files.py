@@ -5,9 +5,9 @@ import sys
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 from pyproj import CRS
 try:
-    import nc_tools as nc
+    import CropSuite.src.nc_tools as nc
 except:
-    from src import nc_tools as nc
+    from CropSuite.src import nc_tools as nc
 
 def get_soil_name(dirn) -> str:
     """

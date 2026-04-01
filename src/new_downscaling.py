@@ -2,20 +2,20 @@ import os
 import numpy as np
 import rasterio
 try:
-    import data_tools as dt
-    import nc_tools as nc
-    import temp_interpolation as ti
-    import prec_interpolation as pi
+    import CropSuite.src.data_tools as dt
+    import CropSuite.src.nc_tools as nc
+    import CropSuite.src.temp_interpolation as ti
+    import CropSuite.src.prec_interpolation as pi
 except:
-    from src import data_tools as dt
-    from src import nc_tools as nc
-    from src import temp_interpolation as ti
-    from src import prec_interpolation as pi
+    from CropSuite.src import data_tools as dt
+    from CropSuite.src import nc_tools as nc
+    from CropSuite.src import temp_interpolation as ti
+    from CropSuite.src import prec_interpolation as pi
 from numba import njit, prange
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 import shutil
 import psutil
-import zarr_tools as zt
+import CropSuite.src.zarr_tools as zt
 import zarr
 from functools import partial
 from datetime import datetime

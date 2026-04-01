@@ -1,7 +1,7 @@
 import sys
 import os
 sys.path.append(os.path.join(os.getcwd(), 'src'))
-import data_tools as dt
+import CropSuite.src.data_tools as dt
 import numpy as np
 import rasterio
 from rasterio.transform import from_bounds
@@ -11,7 +11,7 @@ warnings.filterwarnings('ignore')
 from numba import jit
 from gc import collect
 import math
-import nc_tools as nc
+import CropSuite.src.nc_tools as nc
 import re
 from numba import njit
 import re
